@@ -3,11 +3,11 @@ module.exports = {
     '<rootDir>/src'
   ],
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.ts'
+    '<rootDir>/src/**/*.ts', '!<rootDir>/src/main/**', '!<rootDir>/src/**/*-protocols.ts', '!**/protocols/**', '!**/test/**'
   ],
-  collectCoverage: true,
+  collectCoverage: false,
   coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  coverageProvider: 'babel',
   testEnvironment: 'node',
   //preset: '@shelf/jest-mongodb',
   transform: {
