@@ -1,7 +1,7 @@
-import { Router, Response, Request } from "express";
+import { Router } from "express";
+import { adapteRoute } from "../adapters/express-router-adapter";
+import { makeSignUpController } from "../factories/signup";
 
 export default (router: Router): void => {
-  router.post('/signup', (request: Request, response: Response) => {
-    response.send({ ok: 'ok'  })
-  })
+  router.post('/signup', adapteRoute(makeSignUpController()))
 }

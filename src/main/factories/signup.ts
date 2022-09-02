@@ -4,7 +4,7 @@ import { AccountMongoRepository } from "../../infra/db/mongodb/account-repositor
 import { SignUpController } from "../../presentation/controllers/sign-up/sign-up";
 import { EmailValidatorAdapter } from "../../utils/email-validator-adapter";
 
-export const makeController = (): SignUpController => {
+export const makeSignUpController = (): SignUpController => {
   const emailValidator = new EmailValidatorAdapter()
   const salt = 12;
   const bcryptAdapter = new BcryptAdapter(salt)
