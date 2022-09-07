@@ -1,3 +1,4 @@
+import { Authentication } from "../../../domain/usecases/authentication"
 import { InvalidParamError, MissingParamError } from "../../errors"
 import { badRequest, serverError } from "../../helpers/http-helpers"
 import { HttpRequest } from "../../protocols"
@@ -6,7 +7,17 @@ import { LoginController } from "./login"
 
 interface sutTypes {
   sut: LoginController,
-  emailValidatorStub: EmailValidator
+  emailValidatorStub: EmailValidator,
+  authenticationStub: Authentication
+}
+
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
+    async auth(email: string, password: string): Promise<string> {
+      return await 'any_token'
+    }
+  }
+  return new AuthenticationStub()
 }
 
 const makeEmailValidator = (): EmailValidator => {
@@ -19,11 +30,13 @@ const makeEmailValidator = (): EmailValidator => {
 }
 
 const makeSut = (): sutTypes => {
+  const authenticationStub = makeAuthentication()
   const emailValidatorStub = makeEmailValidator()
-  const sut = new LoginController(emailValidatorStub)
+  const sut = new LoginController(emailValidatorStub, authenticationStub)
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    authenticationStub
   }
 }
 
@@ -79,5 +92,13 @@ describe('Login', () => {
     const httpRequest = makeHttpRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should call authentication with correct values', async () => {
+    const { sut, authenticationStub } = makeSut()
+    const authSpy = jest.spyOn(authenticationStub, 'auth')
+    const httpRequest = makeHttpRequest()
+    await sut.handle(httpRequest)
+    expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password')
   })
 })
