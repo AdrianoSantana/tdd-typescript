@@ -1,6 +1,6 @@
 import { Authentication } from "../../../domain/usecases/authentication"
 import { InvalidParamError, MissingParamError } from "../../errors"
-import { badRequest, serverError, unauthorized } from "../../helpers/http-helpers"
+import { badRequest, ok, serverError, unauthorized } from "../../helpers/http-helpers"
 import { HttpRequest } from "../../protocols"
 import { EmailValidator } from "../sign-up/sign-up-protocols"
 import { LoginController } from "./login"
@@ -116,5 +116,12 @@ describe('Login', () => {
     const httpRequest = makeHttpRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeHttpRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
