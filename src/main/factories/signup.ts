@@ -9,13 +9,12 @@ import { LogControllerDecorator } from "../decorators/log";
 import { makeSignUpValidation } from "./signup-validation";
 
 export const makeSignUpController = (): Controller => {
-  const emailValidator = new EmailValidatorAdapter()
   const salt = 12;
   const bcryptAdapter = new BcryptAdapter(salt)
   const accountMongoRepository = new AccountMongoRepository()
   const dbAddAccount = new DbAddAccount(bcryptAdapter, accountMongoRepository )
   const validationComposite = makeSignUpValidation()
-  const signUpController = new SignUpController(emailValidator, dbAddAccount, validationComposite);
+  const signUpController = new SignUpController(dbAddAccount, validationComposite);
   const logRepository = new LogMongoRepository()
   return new LogControllerDecorator(signUpController, logRepository)
 }
