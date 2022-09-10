@@ -1,4 +1,4 @@
-import { badRequest, serverError, ok } from "../../helpers/http-helpers"
+import { badRequest, serverError, ok } from "../../helpers/http/http-helpers"
 import { Validation } from "../../helpers/validators/validation"
 import { Controller, HttpRequest, HttpResponse, AddAccount } from "./sign-up-protocols"
 
