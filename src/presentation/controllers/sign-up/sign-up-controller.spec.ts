@@ -2,7 +2,7 @@ import { AccountModel } from '../../../domain/models/account'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { EmailValidator, AddAccount,AddAccountModel, HttpRequest  } from './sign-up-protocols'
 import { SignUpController } from './sign-up'
-import { Validation } from '../../helpers/validators/validation'
+import { Validation } from '../../protocols/validation'
 import { badRequest } from '../../helpers/http/http-helpers'
 
 interface SutTypes {
