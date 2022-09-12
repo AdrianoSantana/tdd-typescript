@@ -74,10 +74,17 @@ describe('DbAuthentication usecase', () => {
     expect(accessToken).toBeNull()
   })
 
-  test('Should call hashcCmpare with correct value', async () => {
+  test('Should call hashComparer with correct value', async () => {
     const { sut, hashComparerStub } = makeSut()
     const comparerSpy = jest.spyOn(hashComparerStub, 'comparer')
     await sut.auth(makeFakeAuthentication())
     expect(comparerSpy).toHaveBeenCalledWith('any_password', 'hashed_password')
+  })
+
+  test('Should throw if hashComparer throws', async () => {
+    const { sut, hashComparerStub } = makeSut()
+    jest.spyOn(hashComparerStub, 'comparer').mockRejectedValueOnce(() => new Error())
+    const promiseAuth = sut.auth(makeFakeAuthentication())
+    expect(promiseAuth).rejects.toThrow()
   })
 })
