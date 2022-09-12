@@ -114,4 +114,11 @@ describe('DbAuthentication usecase', () => {
     await sut.auth(makeFakeAuthentication())
     expect(generateSpy).toHaveBeenCalledWith('any_id')
   })
+
+  test('Should throw if tokenGenerator throws', async () => {
+    const { sut, tokenGeneratorStub } = makeSut()
+    jest.spyOn(tokenGeneratorStub, 'generate').mockRejectedValueOnce(() => new Error())
+    const promiseAuth = sut.auth(makeFakeAuthentication())
+    expect(promiseAuth).rejects.toThrow()
+  })
 })
