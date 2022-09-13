@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import { resolve } from 'path'
 import { BcryptAdapter } from './bcrypt-adapter'
 
 const SALT: number = 12
@@ -52,7 +53,14 @@ describe('Bcrypt Adapter', () => {
 
     test('Should returns true if compare succeds', async () => {
         const sut = makeSut()
-        const isValid = await sut.comparer('any_value', 'any_has')
+        const isValid = await sut.comparer('any_value', 'any_hash')
         expect(isValid).toEqual(true)
+    })
+
+    test('Should returns false if compare fails', async () => {
+        const sut = makeSut()
+        jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => new Promise(resolve => resolve(false)))
+        const isValid = await sut.comparer('any_value', 'any_hash')
+        expect(isValid).toEqual(false)
     })
 })
