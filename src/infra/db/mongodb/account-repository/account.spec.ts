@@ -1,6 +1,8 @@
-import { MongoClient } from "mongodb"
+import { Collection, MongoClient } from "mongodb"
 import { MongoHelper } from "../helpers/mongodb-helper"
 import { AccountMongoRepository } from "./account"
+
+let accountCollection: Collection;
 
 describe('Mongodb Account Repository', () => {
     beforeAll(async () => {
@@ -12,7 +14,7 @@ describe('Mongodb Account Repository', () => {
     })
 
     beforeEach(async () => {
-        const accountCollection = await MongoHelper.getCollection('accounts')
+        accountCollection = await MongoHelper.getCollection('accounts')
         await accountCollection.deleteMany({})
     })
 
@@ -26,6 +28,20 @@ describe('Mongodb Account Repository', () => {
         expect(account).toBeTruthy()
         expect(account.name).toBe('valid_name')
         expect(account.email).toBe('valid_email@mail.com')
+        expect(account.password).toBe('hashed_password')
+    })
+
+    test('Should return an account on loadByEmail success', async () => {
+        const sut = new AccountMongoRepository()
+        await accountCollection.insertOne({
+            name: 'valid_name',
+            email: 'any_email@mail.com',
+            password: 'hashed_password'
+        })
+        const account = await sut.loadByEmail('any_email@mail.com')
+        expect(account).toBeTruthy()
+        expect(account.name).toBe('valid_name')
+        expect(account.email).toBe('any_email@mail.com')
         expect(account.password).toBe('hashed_password')
     })
 })
