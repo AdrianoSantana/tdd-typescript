@@ -7,9 +7,9 @@ export const adapteRoute = (controller: Controller): any => {
       body: request.body
     }
     const httpResponse = await controller.handle(httpRequest)
-    if (httpResponse.statusCode === 200)
-      response.status(httpResponse.statusCode).send(httpResponse.body)
-    else
+    if (httpResponse.statusCode === 400)
       response.status(httpResponse.statusCode).send(httpResponse.body.message)
-  }
+    else
+      response.status(httpResponse.statusCode).send(httpResponse.body)
+  } 
 }
