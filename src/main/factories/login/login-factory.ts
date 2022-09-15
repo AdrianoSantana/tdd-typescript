@@ -10,7 +10,7 @@ import env from "../../config/env";
 import { LogControllerDecorator } from "../../decorators/log";
 import { makeLoginValidation } from "./login-validation-factory";
 
-export const makeSignUpController = (): Controller => {
+export const makeLoginController = (): Controller => {
   const salt = 12
   const accountMongoRepository = new AccountMongoRepository()
   const bcryptAdapter = new BcryptAdapter(salt)
