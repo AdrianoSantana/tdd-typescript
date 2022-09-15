@@ -3,8 +3,8 @@ import { InvalidParamError, MissingParamError } from "../../errors"
 import { badRequest, ok, serverError, unauthorized } from "../../helpers/http/http-helpers"
 import { Validation } from "../../protocols/validation"
 import { HttpRequest } from "../../protocols"
-import { EmailValidator } from "../sign-up/sign-up-protocols"
-import { LoginController } from "./login"
+import { EmailValidator } from "../sign-up/sign-up-controller-protocols"
+import { LoginController } from "./login-controller"
 
 interface sutTypes {
   sut: LoginController,

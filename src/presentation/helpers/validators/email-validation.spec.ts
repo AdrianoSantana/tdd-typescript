@@ -1,4 +1,4 @@
-import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from "../../controllers/sign-up/sign-up-protocols"
+import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from "../../controllers/sign-up/sign-up-controller-protocols"
 import { HttpRequest } from "../../protocols"
 import { EmailValidation } from "./email-validation"
 import { Validation } from "../../protocols/validation"
