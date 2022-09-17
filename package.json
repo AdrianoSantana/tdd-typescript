@@ -11,7 +11,8 @@
     "test:staged": "npm test --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "start": "node ./dist/src/main/server.js",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "up": "npm run build && docker-compose up"
   },
   "keywords": [],
   "author": "",
