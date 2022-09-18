@@ -14,7 +14,9 @@ services:
     command: npm start
     volumes:
       - ./dist:/usr/src/clean-node-api/dist
+      - ./package.json:/usr/src/clean-node-api/dist/package.json
     ports: 
       - "7777:7777"
+      - "9222:9222"
     links: 
       - mongo
