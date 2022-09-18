@@ -3,7 +3,6 @@ services:
   mongo:
     container_name: mongo-container 
     image: mongo:latest
-    restart: always
     volumes:
       - ./mongo-data:/data/db
     ports:
@@ -12,7 +11,6 @@ services:
     container_name: api_container
     build: .
     image: clean-node-api
-    restart: always
     command: npm start
     volumes:
       - ./dist:/usr/src/clean-node-api/dist
