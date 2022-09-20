@@ -3,8 +3,9 @@ import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { EmailValidator, AddAccount,AddAccountModel, HttpRequest  } from './sign-up-controller-protocols'
 import { SignUpController } from './sign-up-controller'
 import { Validation } from '../../protocols/validation'
-import { badRequest, serverError } from '../../helpers/http/http-helpers'
+import { badRequest, forbidden, serverError } from '../../helpers/http/http-helpers'
 import { Authentication, AuthenticationModel } from '../../../domain/usecases/authentication'
+import { EmailInUseError } from '../../errors/email-in-use-error'
 
 interface SutTypes {
   sut: SignUpController,
@@ -166,5 +167,21 @@ describe('SignUpController', () => {
     const httpRequest = makeHttpRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  
+  test('should return 403 if addAccount returns null', async() => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockResolvedValueOnce(null)
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_email@mail.com.br',
+        password: 'valid_password',
+        passwordConfirmation: 'valid_password'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })
 })
