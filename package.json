@@ -14,7 +14,8 @@
     "build": "rimraf dist && tsc",
     "debug": "node --inspect=0.0.0.0:9222 --nolazy ./dist/src/main/server.js",
     "up": "npm run build && docker-compose up",
-    "dev": "sucrase-node src/main/server.ts"
+    "dev": "sucrase-node src/main/server.ts",
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy ./dist/src/main/server.js"
   },
   "keywords": [],
   "author": "",
