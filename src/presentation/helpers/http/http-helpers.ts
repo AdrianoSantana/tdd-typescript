@@ -36,3 +36,10 @@ export const unauthorized = (): HttpResponse => {
     body: new UnathourizedError()
   }
 }
+
+export const noContent = (): HttpResponse => {
+  return {
+    statusCode: 204,
+    body: null
+  }
+}
