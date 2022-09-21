@@ -1,9 +1,8 @@
-import { Authentication, AuthenticationModel } from "../../../domain/usecases/authentication"
-import { InvalidParamError, MissingParamError } from "../../errors"
-import { badRequest, ok, serverError, unauthorized } from "../../helpers/http/http-helpers"
-import { Validation } from "../../protocols/validation"
-import { HttpRequest } from "../../protocols"
-import { EmailValidator } from "../sign-up/sign-up-controller-protocols"
+import { Authentication, AuthenticationModel } from "../../../../domain/usecases/authentication"
+import { MissingParamError } from "../../../errors"
+import { badRequest, ok, serverError, unauthorized } from "../../../helpers/http/http-helpers"
+import { HttpRequest } from "../../../protocols"
+import { Validation } from "../../../protocols/validation"
 import { LoginController } from "./login-controller"
 
 interface sutTypes {
